@@ -2,6 +2,10 @@ package com.googlecode.jzippy;
 
 import java.io.File;
 
+/**
+ * An example of uploading a text file using JZippy.
+ * @author ben
+ */
 public class Main {
 
 	public static void main(String[] args) throws Exception {

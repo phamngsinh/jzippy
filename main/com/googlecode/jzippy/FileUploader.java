@@ -19,6 +19,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.util.EntityUtils;
 
+/**
+ * Uploads files to a ZippyShare server.
+ * @author ben
+ */
 public class FileUploader {
 	
 	private static final char QUOTE = '"';
@@ -28,12 +32,23 @@ public class FileUploader {
 	private final File file;
 	private String url;
 	
+	/**
+	 * Creates a new file uploader.
+	 * @param server The server subdomain (eg: www24).
+	 * @param uploadId The upload ID.
+	 * @param file The file to upload.
+	 */
 	public FileUploader(final String server, final String uploadId, final File file){
 		this.server = server;
 		this.uploadId = uploadId;
 		this.file = file;
 	}
 	
+	/**
+	 * Uploads the file to the server.
+	 * This will block until it has finished uploading.
+	 * @throws IOException If the upload fails or there is no URL to be found.
+	 */
 	public void upload() throws IOException {
 		final HttpClient client = new DefaultHttpClient();
 		final HttpPost post = new HttpPost("http://"+server+".zippyshare.com/upload");
@@ -62,6 +77,10 @@ public class FileUploader {
 		client.getConnectionManager().shutdown();
 	}
 	
+	/**
+	 * Gets the URL of the uploaded file.
+	 * Format: http://[SERVER].zippyshare.com/v/[FILE INDEX]/file.html
+	 */
 	public String getURL(){
 		return url;
 	}

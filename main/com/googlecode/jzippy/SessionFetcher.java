@@ -8,7 +8,10 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-
+/**
+ * Fetches the uploadId and the server from the main page.
+ * @author ben
+ */
 public class SessionFetcher {
 
 	public static final String DEFAULT_FETCH_URL = "http://beta.zippyshare.com";
@@ -18,14 +21,25 @@ public class SessionFetcher {
 	private String uploadId;
 	private String server;
 
+	/**
+	 * Creates a session fetcher with the {@link #DEFAULT_FETCH_URL}.
+	 */
 	public SessionFetcher(){
 		this(DEFAULT_FETCH_URL);
 	}
 
+	/**
+	 * Creates a session fetcher with a custom URL.
+	 * @param url The URL to fetch from.
+	 */
 	public SessionFetcher(final String url){
 		this.url = url;
 	}
 
+	/**
+	 * Fetches the variables.
+	 * @throws IOException If there is a connection error or the regex fails to match.
+	 */
 	public void fetch() throws IOException {
 		final HttpClient client = new DefaultHttpClient();
 		final HttpGet get = new HttpGet(url);
@@ -43,14 +57,20 @@ public class SessionFetcher {
 		uploadId = uploadIdRegex.get(1);
 		server = serverRegex.get(1);
 		
-		//CloseConnection
+		//Close connection
 		client.getConnectionManager().shutdown();
 	}
 
+	/**
+	 * Gets the upload ID.
+	 */
 	public String getUploadId(){
 		return uploadId;
 	}
 
+	/**
+	 * Gets the server subdomain (eg: www24).
+	 */
 	public String getServer(){
 		return server;
 	}
